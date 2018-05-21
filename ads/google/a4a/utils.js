@@ -238,10 +238,11 @@ export function groupAmpAdsByType(win, type, groupFn) {
  * @param {!Window} win
  * @param {!Node|!../../../src/service/ampdoc-impl.AmpDoc} nodeOrDoc
  * @param {number} startTime
- * @param {!string} ampAdImplementation
+ * @param {string=} opt_ampAdImplementation
  * @return {!Promise<!Object<string,null|number|string>>}
  */
-export function googlePageParameters(win, nodeOrDoc, startTime, ampAdImplementation) {
+export function googlePageParameters(
+  win, nodeOrDoc, startTime, opt_ampAdImplementation) {
   return Promise.all([
     getOrCreateAdCid(nodeOrDoc, 'AMP_ECID_GOOGLE', '_ga'),
     Services.viewerForDoc(nodeOrDoc).getReferrerUrl()])
@@ -259,7 +260,7 @@ export function googlePageParameters(win, nodeOrDoc, startTime, ampAdImplementat
             .getVisibilityState();
         const art = getBinaryTypeNumericalCode(getBinaryType(win));
         return {
-          'is_amp': ampAdImplementation,
+          'is_amp': opt_ampAdImplementation || AMP_AD_XHR_TO_IFRAME_OR_AMP,
           'amp_v': '$internalRuntimeVersion$',
           'd_imp': '1',
           'c': getCorrelator(win, clientId, nodeOrDoc),
@@ -308,10 +309,10 @@ export function googleAdUrl(
   // TODO: Maybe add checks in case these promises fail.
   const blockLevelParameters = googleBlockParameters(a4a, opt_experimentIds);
   const ampAdImplementation = a4a.shouldSkipXhr_() ?
-        AmpAdImplementation.AMP_AD_FRAME_GET:
-        AmpAdImplementation.AMP_AD_XHR_TO_IFRAME_OR_AMP;
+    AmpAdImplementation.AMP_AD_FRAME_GET :
+    AmpAdImplementation.AMP_AD_XHR_TO_IFRAME_OR_AMP;
   return googlePageParameters(a4a.win, a4a.getAmpDoc(), startTime,
-                              ampAdImplementation)
+      ampAdImplementation)
       .then(pageLevelParameters => {
         Object.assign(parameters, blockLevelParameters, pageLevelParameters);
         return truncAndTimeUrl(baseUrl, parameters, startTime);
@@ -895,4 +896,17 @@ function getBrowserCapabilitiesBitmap(win) {
     }
   }
   return browserCapabilities;
+}
+
+/**
+ * Returns boolean whether the page is canonical AMP, based on the url
+ * of the page.
+ * @param {!Window} win
+ * @return {boolean}
+ */
+export function isCanonical(win) {
+  const googleCdnProxyRegex =
+  /^https:\/\/([a-zA-Z0-9_-]+\.)?cdn\.ampproject\.org((\/.*)|($))+/;
+  return !(googleCdnProxyRegex.test(win.location.origin)
+           || getMode(win).localDev || getMode(win).test);
 }
