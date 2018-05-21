@@ -142,8 +142,8 @@ export class DoubleclickA4aEligibility {
           (getMode(win).localDev || getMode(win).test)) {
         experimentId = MANUAL_EXPERIMENT_ID;
       } else {
-        // For unconditioned canonical holdback, in the control branch
-        // we allow Fast Fetch on non-CDN pages, but in the experiment we do not.
+        // For unconditioned canonical holdback, in the control branch we allow
+        // Fast Fetch on non-CDN pages, but in the experiment we do not.
         if (getExperimentBranch(
             win, UNCONDITIONED_CANONICAL_FF_HOLDBACK_EXP_NAME) !=
             DOUBLECLICK_UNCONDITIONED_EXPERIMENTS.CANONICAL_HLDBK_EXP) {
@@ -176,8 +176,9 @@ export class DoubleclickA4aEligibility {
       forceExperimentBranch(win, DOUBLECLICK_A4A_EXPERIMENT_NAME, experimentId);
     }
 
-    // If we need to rollback the launch, or we are in the launch's holdback experiment,
-    // still use Delayed Fetch if USDRUD or custom remote.html in use
+    // If we need to rollback the launch, or we are in the launch's holdback
+    // experiment, still use Delayed Fetch if USDRUD or custom remote.html in
+    // use
     if (isExperimentOn(win, dfDepRollbackExperiment) ||
         experimentId ==
         DOUBLECLICK_EXPERIMENT_FEATURE.DF_DEP_HOLDBACK_EXPERIMENT) {
@@ -186,8 +187,6 @@ export class DoubleclickA4aEligibility {
     }
     return true;
   }
-
-
 }
 
 /** @const {!DoubleclickA4aEligibility} */
@@ -197,7 +196,7 @@ const singleton = new DoubleclickA4aEligibility();
  * @param {!Window} win
  * @param {!Element} element
  * @param {boolean} useRemoteHtml
- * @returns {boolean}
+ * @return {boolean}
  */
 export function doubleclickIsA4AEnabled(win, element, useRemoteHtml) {
   return singleton.isA4aEnabled(win, element, useRemoteHtml);

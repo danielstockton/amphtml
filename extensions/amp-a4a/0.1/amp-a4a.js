@@ -711,8 +711,9 @@ export class AmpA4A extends AMP.BaseElement {
           }
           return adUrl && this.sendXhrRequest(adUrl);
         })
-        // The following block returns either the response (as a {bytes, headers}
-        // object), or null if no response is available / response is empty.
+        // The following block returns either the response (as a
+        // {bytes, headers} object), or null if no response is available /
+        // response is empty.
         /** @return {?Promise<?{bytes: !ArrayBuffer, headers: !Headers}>} */
         .then(fetchResponse => {
           checkStillCurrent();
@@ -1583,8 +1584,8 @@ export class AmpA4A extends AMP.BaseElement {
           // Name will be set for real below in nameframe case.
           break;
         default:
-          // Shouldn't be able to get here, but...  Because of the assert, above,
-          // we can only get here in non-dev mode, so give user feedback.
+          // Shouldn't be able to get here, but...  Because of the assert,
+          // above, we can only get here in non-dev mode, so give user feedback.
           user().error('A4A', 'A4A received unrecognized cross-domain name'
               + ' attribute iframe rendering mode request: %s.  Unable to'
               + ' render a creative for'
@@ -1826,8 +1827,8 @@ export class AmpA4A extends AMP.BaseElement {
   }
 
   /**
-   * Whether preferential render should still be utilized if web crypto is unavailable,
-   * and crypto signature header is present.
+   * Whether preferential render should still be utilized if web crypto is
+   * unavailable, and crypto signature header is present.
    * @return {boolean}
    */
   shouldPreferentialRenderWithoutCrypto() {
