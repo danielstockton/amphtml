@@ -185,5 +185,5 @@ events (`requestTime`, `loadTime`, `insertTime` etc.)
 | `clickTime`   | Timestamp when ad is clicked                                                                                                     |
 | `exitTime`    | Timestamp when ad page moves from active => inactive                                                                             |
 | `discardTime` | Timestamp when ad is discared due to bad metadata etc.                                                                           |
-| `position`    | Position in the parent story. Number of page before ad + 1. Does not count previously inserted ad pages. (avaiable at insertion) |
-| `ctaType`     | Given cta-type of inserted ad (avaiable at insertion)                                                                            |
+| `position`    | Position in the parent story. Number of page before ad + 1. Does not count previously inserted ad pages. (available at insertion) |
+| `ctaType`     | Given cta-type of inserted ad (available at insertion)                                                                            |
